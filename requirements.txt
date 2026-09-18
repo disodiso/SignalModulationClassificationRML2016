@@ -4,3 +4,4 @@ matplotlib
 torch
 tqdm
 kagglehub
+ipykernel
