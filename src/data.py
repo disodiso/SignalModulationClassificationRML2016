@@ -1,14 +1,33 @@
 """Loading and splitting for the RadioML2016.10a dataset.
 
-Expected file: data/RML2016.10a_dict.pkl
-Format: pickle dict keyed by (modulation_type: str, snr: int) -> ndarray
-of shape (num_examples, 2, 128) holding I/Q samples.
+Dataset is fetched via kagglehub (cached under ~/.cache/kagglehub after
+the first download) rather than stored in this repo. Format: pickle dict
+keyed by (modulation_type: str, snr: int) -> ndarray of shape
+(num_examples, 2, 128) holding I/Q samples.
 """
 
+import glob
+import os
 import pickle
 
 import numpy as np
 from sklearn.model_selection import train_test_split
+
+KAGGLE_DATASET = "nolasthitnotomorrow/radioml2016-deepsigcom"
+
+
+def download_dataset() -> str:
+    """Download (or reuse the cached copy of) the dataset via kagglehub
+    and return the local path to the .pkl file inside it."""
+    import kagglehub
+
+    path = kagglehub.dataset_download(KAGGLE_DATASET)
+    print("Path to dataset files:", path)
+
+    candidates = glob.glob(os.path.join(path, "**", "*.pkl"), recursive=True)
+    if not candidates:
+        raise FileNotFoundError(f"No .pkl file found under {path}")
+    return candidates[0]
 
 
 def set_seed(seed: int = 42) -> None:
@@ -25,7 +44,11 @@ def set_seed(seed: int = 42) -> None:
         pass
 
 
-def load_raw(path: str = "data/RML2016.10a_dict.pkl") -> dict:
+def load_raw(path: str | None = None) -> dict:
+    """Load the raw (mod, snr) -> examples dict. If no path is given,
+    downloads (or reuses the cached copy of) the dataset via kagglehub."""
+    if path is None:
+        path = download_dataset()
     with open(path, "rb") as f:
         return pickle.load(f, encoding="latin1")
 
