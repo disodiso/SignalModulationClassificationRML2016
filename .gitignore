@@ -14,3 +14,7 @@ env/
 *.log
 runs/
 .DS_Store
+
+figures/
+output.png
+*.egg-info/

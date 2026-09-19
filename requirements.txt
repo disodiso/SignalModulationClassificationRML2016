@@ -1,7 +1,9 @@
-numpy
-scikit-learn
-matplotlib
-torch
-tqdm
-kagglehub
-ipykernel
+# Pinned to the versions this project was developed and last run against.
+# Python 3.14.2. For loose ranges instead, install the package: pip install -e .
+numpy==2.5.3
+scikit-learn==1.9.1
+matplotlib==3.11.2
+torch==2.14.0
+tqdm==4.70.1
+kagglehub==1.0.2
+ipykernel==7.3.0

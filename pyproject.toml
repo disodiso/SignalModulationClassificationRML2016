@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rml2016-modulation-classification"
+version = "0.1.0"
+description = "Modulation classification on RadioML 2016.10a with a 1D CNN, plus a classical receiver front-end for comparison"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Daniel" }]
+dependencies = [
+    "numpy>=2.0",
+    "scikit-learn>=1.5",
+    "matplotlib>=3.8",
+    "torch>=2.2",
+    "tqdm>=4.66",
+    "kagglehub>=0.3",
+]
+
+[project.optional-dependencies]
+notebook = ["ipykernel>=6.29"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.setuptools]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
